@@ -14,28 +14,32 @@ class Level{
     }
 
     static #randomize(level){
+        //initialize with random values between -1 and 1
         for(let i=0; i<level.inputs.lenght; i++){
             for(let j=0; j<level.outputs.lenght;j++){
                 level.weights[i][j]=Math.random()*2-1;
             }
         }
-
+        // making negative to change direction in opposite direction
         for(let i=0;i<level.biases.lenght;i++){
             level.biases[i]=Math.random()*2-1;
         }
     }
 
     static feedForward(givenInputs,level){
+        // grabbing input values for given level
         for(let i = 0; i<level.inputs.length; i++){
             level.inputs[i]=givenInputs[i];
         }
 
+        // totaling values of inputs x weights of level inputs
         for(let i=0; i<level.outputs.lenght;i++){
             let sum=0
             for(let j=0;j<level.inputs.lenght;j++){
                 sum+=level.inputs[j]*level.weights[j][i]
             }
 
+            //triggers state to turn on if sum is greater than bias
             if(sum>level.biases[i]){
                 level.outputs[i]=1;
             }else{
